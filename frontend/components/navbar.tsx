@@ -26,8 +26,11 @@ export function Navbar() {
           <Link href="/cotizar" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#1D6B48]">
             Cotizar
           </Link>
-          <Button asChild className="bg-[#1D6B48] hover:bg-[#165536]">
+          <Button asChild variant="outline" className="border-[#1D6B48] text-[#1D6B48] hover:bg-[#1D6B48] hover:text-white">
             <Link href="/cotizar">Pedir cotización</Link>
+          </Button>
+          <Button asChild className="bg-[#1D6B48] hover:bg-[#165536] font-semibold">
+            <Link href="/comprar-prueba">🛒 Comprar ahora</Link>
           </Button>
         </div>
 
@@ -52,8 +55,11 @@ export function Navbar() {
             <Link href="/cotizar" className="text-sm font-medium text-gray-700" onClick={() => setOpen(false)}>
               Cotizar
             </Link>
-            <Button asChild className="bg-[#1D6B48] hover:bg-[#165536]">
+            <Button asChild variant="outline" className="border-[#1D6B48] text-[#1D6B48]">
               <Link href="/cotizar" onClick={() => setOpen(false)}>Pedir cotización</Link>
+            </Button>
+            <Button asChild className="bg-[#1D6B48] hover:bg-[#165536] font-semibold">
+              <Link href="/comprar-prueba" onClick={() => setOpen(false)}>🛒 Comprar ahora</Link>
             </Button>
           </div>
         </div>

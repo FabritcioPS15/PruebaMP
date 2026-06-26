@@ -49,10 +49,13 @@ export default function Home() {
               Calidad premium para tu hogar u oficina en Lima, Perú.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg" className="bg-[#1D6B48] px-8 hover:bg-[#165536]">
+              <Button asChild size="lg" className="bg-[#1D6B48] px-8 hover:bg-[#165536] text-base font-bold shadow-lg">
+                <Link href="/comprar-prueba">🛒 Comprar ahora</Link>
+              </Button>
+              <Button asChild size="lg" className="bg-white border-2 border-[#1D6B48] text-[#1D6B48] px-8 hover:bg-[#f0faf5]">
                 <Link href="/cotizar">Solicitar cotización</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-[#1D6B48] px-8 text-[#1D6B48] hover:bg-[#1D6B48] hover:text-white">
+              <Button asChild size="lg" variant="outline" className="border-gray-300 px-8 text-gray-700 hover:bg-gray-100">
                 <Link href="/catalogo">
                   Ver proyectos <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -112,7 +115,10 @@ export default function Home() {
               Solicita una cotización gratuita y recibe una propuesta personalizada en menos de 24 horas.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg" className="bg-white text-[#1D6B48] hover:bg-gray-100">
+              <Button asChild size="lg" className="bg-white text-[#1D6B48] hover:bg-gray-100 font-bold text-base px-8">
+                <Link href="/comprar-prueba">🛒 Comprar ahora</Link>
+              </Button>
+              <Button asChild size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8">
                 <Link href="/cotizar">Solicitar cotización gratis</Link>
               </Button>
               <a
