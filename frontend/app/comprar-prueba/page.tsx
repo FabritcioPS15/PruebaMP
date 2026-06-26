@@ -224,10 +224,10 @@ export default function PagoPruebaPage() {
 
         {/* ── PASO 2: Pagar ── */}
         {paso === 'pagar' && productoSeleccionado && (
-          <div className="flex flex-col lg:flex-row gap-6 items-start">
+          <div className="flex flex-col lg:flex-row gap-5 items-start">
 
-            {/* Resumen */}
-            <div className="w-full lg:w-[360px] space-y-4">
+            {/* Resumen - compacto en móvil, sidebar en desktop */}
+            <div className="w-full lg:w-[340px] space-y-3 lg:sticky lg:top-20">
               {/* Card producto con imagen */}
               <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
                 <div className="relative w-full h-40">

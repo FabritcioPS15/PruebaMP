@@ -16,7 +16,7 @@ export function Navbar() {
           <span>MelaminaPro</span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-6 md:flex">
           <Link href="/" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#1D6B48]">
             Inicio
           </Link>
@@ -26,8 +26,11 @@ export function Navbar() {
           <Link href="/cotizar" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#1D6B48]">
             Cotizar
           </Link>
+          <Link href="/mis-compras" className="text-sm font-medium text-gray-700 transition-colors hover:text-[#1D6B48]">
+            Mis compras
+          </Link>
           <Button asChild variant="outline" className="border-[#1D6B48] text-[#1D6B48] hover:bg-[#1D6B48] hover:text-white">
-            <Link href="/cotizar">Pedir cotización</Link>
+            <Link href="/cotizar">Cotizar</Link>
           </Button>
           <Button asChild className="bg-[#1D6B48] hover:bg-[#165536] font-semibold">
             <Link href="/comprar-prueba">🛒 Comprar ahora</Link>
@@ -54,6 +57,9 @@ export function Navbar() {
             </Link>
             <Link href="/cotizar" className="text-sm font-medium text-gray-700" onClick={() => setOpen(false)}>
               Cotizar
+            </Link>
+            <Link href="/mis-compras" className="text-sm font-medium text-gray-700" onClick={() => setOpen(false)}>
+              Mis compras
             </Link>
             <Button asChild variant="outline" className="border-[#1D6B48] text-[#1D6B48]">
               <Link href="/cotizar" onClick={() => setOpen(false)}>Pedir cotización</Link>

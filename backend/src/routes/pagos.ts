@@ -85,6 +85,33 @@ router.post('/crear', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/pagos/recientes (público - últimas compras aprobadas)
+router.get('/recientes', async (req: Request, res: Response) => {
+  try {
+    const { data, error } = await supabase
+      .from('pagos')
+      .select(`
+        *,
+        cotizacion:cotizacion_id (
+          id,
+          ancho_cm,
+          alto_cm,
+          producto:producto_id (nombre, categoria, descripcion, precio_base),
+          cliente:cliente_id (nombre, email)
+        )
+      `)
+      .eq('estado', 'completado')
+      .order('pagado_en', { ascending: false })
+      .limit(20);
+
+    if (error) throw error;
+    res.json(data || []);
+  } catch (error) {
+    console.error('Error al obtener pagos recientes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 // GET /api/pagos/:cotizacionId (Admin)
 router.get('/:cotizacionId', requireAdmin, async (req: Request, res: Response) => {
   try {
@@ -99,3 +126,4 @@ router.get('/:cotizacionId', requireAdmin, async (req: Request, res: Response) =
 });
 
 export default router;
+
