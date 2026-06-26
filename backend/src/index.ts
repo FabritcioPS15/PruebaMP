@@ -13,7 +13,21 @@ const PORT = process.env.PORT || 3001;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 app.use(cors({
-  origin: [FRONTEND_URL, 'http://localhost:3000']
+  origin: (origin, callback) => {
+    const allowed = [
+      FRONTEND_URL,
+      'http://localhost:3000',
+      'http://localhost:3001',
+    ];
+    // Permitir cualquier subdominio de vercel.app
+    const isVercel = origin && /\.vercel\.app$/.test(origin);
+    if (!origin || isVercel || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS bloqueado para: ${origin}`));
+    }
+  },
+  credentials: true,
 }));
 
 // Para los webhooks a veces se necesita raw body, pero express.json() es suficiente si no se valida firma estricta
