@@ -4,7 +4,7 @@
   "description": "API REST para tienda de muebles de melamina a medida",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc"
   },
