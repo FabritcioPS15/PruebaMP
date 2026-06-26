@@ -286,7 +286,7 @@ export default function PagoPruebaPage() {
 
             {/* Brick MP - look oficial */}
             <div className="w-full lg:flex-1">
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
                 <div className="px-5 sm:px-6 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
                   <div>
                     <h2 className="text-gray-800 font-semibold text-base">Datos de pago</h2>
