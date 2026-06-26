@@ -325,81 +325,190 @@ export default function PagoPruebaPage() {
 
         {/* ── PASO 3: Resultado ── */}
         {paso === 'resultado' && resultado && (
-          <div className="max-w-md mx-auto w-full">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-              {/* Header resultado con imagen de fondo */}
-              <div className="relative">
-                {productoSeleccionado && (
-                  <img
-                    src={getImage(productoSeleccionado.categoria)}
-                    alt=""
-                    className="w-full h-28 object-cover"
-                  />
-                )}
-                <div className={`absolute inset-0 ${resultado.ok ? 'bg-[#00a650]/80' : 'bg-red-500/80'}`} />
-                <div className="relative px-6 py-6 text-center">
-                  <div className="flex justify-center mb-3">
-                    {resultado.ok ? (
-                      <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg">
-                        <FiCheckCircle className="text-[#00a650] text-3xl" />
+          <div className="max-w-lg mx-auto w-full">
+
+            {resultado.ok ? (
+              /* ── CONFIRMACIÓN APROBADA estilo Mercado Libre ── */
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+
+                {/* Header verde con checkmark animado */}
+                <div className="bg-[#00a650] px-6 pt-8 pb-10 text-center relative">
+                  {/* Círculo con check */}
+                  <div className="flex justify-center mb-5">
+                    <div className="relative">
+                      <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl">
+                        <svg className="w-11 h-11 text-[#00a650]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
                       </div>
-                    ) : (
-                      <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg text-red-500 text-3xl">✕</div>
-                    )}
+                      {/* Anillo animado */}
+                      <div className="absolute inset-0 rounded-full border-4 border-white/30 animate-ping" style={{ animationDuration: '2s', animationIterationCount: '2' }} />
+                    </div>
                   </div>
-                  <h2 className="text-white text-xl font-bold">
-                    {resultado.ok ? '¡Pago aprobado!' : 'Pago rechazado'}
-                  </h2>
-                  <p className="text-white/80 text-sm mt-1">
-                    {resultado.ok ? 'Tu transacción fue procesada exitosamente.' : resultado.msg}
+                  <h1 className="text-white text-2xl font-bold mb-1">¡Listo! Tu pago fue acreditado</h1>
+                  <p className="text-white/80 text-sm">Te avisaremos cuando el vendedor confirme tu compra</p>
+                </div>
+
+                {/* Onda decorativa */}
+                <div className="bg-[#00a650] h-4 relative">
+                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-white rounded-t-[50%]" />
+                </div>
+
+                {/* Resumen del pedido */}
+                <div className="px-6 pt-2 pb-4">
+                  {/* Producto */}
+                  <div className="flex items-center gap-3 py-4 border-b border-gray-100">
+                    <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
+                      <img
+                        src={getImage(productoSeleccionado?.categoria || '')}
+                        alt={productoSeleccionado?.nombre}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-gray-400 text-xs">{productoSeleccionado?.categoria}</p>
+                      <p className="text-gray-800 font-semibold text-sm leading-snug truncate">{productoSeleccionado?.nombre}</p>
+                      <p className="text-gray-400 text-xs mt-0.5">100 × 200 cm (ejemplo)</p>
+                    </div>
+                    <p className="text-gray-800 font-bold text-base flex-shrink-0">
+                      S/ {productoSeleccionado?.precio_base?.toFixed(2)}
+                    </p>
+                  </div>
+
+                  {/* Desglose del pago */}
+                  <div className="py-4 space-y-3 border-b border-gray-100">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500 text-sm">Subtotal</span>
+                      <span className="text-gray-700 text-sm font-medium">S/ {productoSeleccionado?.precio_base?.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500 text-sm">Costo de envío</span>
+                      <span className="text-[#00a650] text-sm font-semibold">Gratis</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-500 text-sm">Medio de pago</span>
+                      <span className="text-gray-700 text-sm font-medium">Tarjeta de crédito/débito</span>
+                    </div>
+                  </div>
+
+                  {/* Total */}
+                  <div className="py-4 flex justify-between items-center border-b border-gray-100">
+                    <span className="text-gray-800 font-bold text-base">Total</span>
+                    <span className="text-gray-900 font-extrabold text-xl">S/ {productoSeleccionado?.precio_base?.toFixed(2)}</span>
+                  </div>
+
+                  {/* Número de operación */}
+                  {resultado.paymentId && (
+                    <div className="py-4 flex justify-between items-center border-b border-gray-100">
+                      <span className="text-gray-500 text-sm">Número de operación</span>
+                      <span className="text-gray-700 text-sm font-mono font-semibold">{resultado.paymentId}</span>
+                    </div>
+                  )}
+
+                  {/* Estado */}
+                  <div className="py-4 flex justify-between items-center">
+                    <span className="text-gray-500 text-sm">Estado</span>
+                    <span className="inline-flex items-center gap-1.5 bg-[#f0fdf4] text-[#00a650] text-xs font-bold px-3 py-1 rounded-full border border-[#bbf7d0]">
+                      <span className="w-1.5 h-1.5 bg-[#00a650] rounded-full" />
+                      Acreditado
+                    </span>
+                  </div>
+                </div>
+
+                {/* Aviso */}
+                <div className="mx-6 mb-5 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 flex items-start gap-3">
+                  <span className="text-[#009ee3] text-lg mt-0.5">ℹ️</span>
+                  <p className="text-gray-600 text-xs leading-relaxed">
+                    Recibirás una confirmación por email con todos los detalles de tu pedido.
+                    El tiempo de fabricación es de <strong>7 a 15 días hábiles</strong>.
                   </p>
                 </div>
+
+                {/* Botones */}
+                <div className="px-6 pb-6 flex flex-col gap-3">
+                  <button
+                    onClick={resetear}
+                    className="w-full bg-[#009ee3] hover:bg-[#0080bb] text-white font-bold py-3.5 px-4 rounded-xl transition-colors text-sm"
+                  >
+                    Comprar otro producto
+                  </button>
+                  <a
+                    href="/"
+                    className="w-full border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold py-3.5 px-4 rounded-xl transition-colors text-sm text-center"
+                  >
+                    Volver al inicio
+                  </a>
+                </div>
+
+                {/* Footer MP */}
+                <div className="border-t border-gray-100 px-6 py-3 flex items-center justify-center gap-1.5">
+                  <svg className="w-3.5 h-3.5 text-[#009ee3]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-gray-400 text-xs">Pago procesado con</span>
+                  <span className="text-[#009ee3] text-xs font-bold">Mercado Pago</span>
+                </div>
               </div>
 
-              {/* Detalle */}
-              {resultado.paymentId && (
-                <div className="px-6 py-5 border-b border-gray-100">
-                  <h3 className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-4 text-center">Detalle de la compra</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Producto</span>
-                      <span className="text-gray-800 font-medium text-right max-w-[180px]">{productoSeleccionado?.nombre}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Medidas (ejemplo)</span>
-                      <span className="text-gray-800 font-medium">100 × 200 cm</span>
-                    </div>
-                    <div className="border-t border-dashed border-gray-200 pt-3 flex justify-between">
-                      <span className="text-gray-800 font-semibold">Total pagado</span>
-                      <span className="text-gray-900 font-bold text-lg">S/ {productoSeleccionado?.precio_base?.toFixed(2)}</span>
+            ) : (
+              /* ── PAGO RECHAZADO ── */
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className="bg-[#f23d4f] px-6 pt-8 pb-10 text-center">
+                  <div className="flex justify-center mb-5">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl">
+                      <svg className="w-11 h-11 text-[#f23d4f]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
                     </div>
                   </div>
-                  <div className="mt-4 bg-gray-50 rounded-lg px-4 py-2 text-center">
-                    <p className="text-gray-400 text-[10px] uppercase tracking-widest">ID Transacción</p>
-                    <p className="text-gray-600 text-xs font-mono font-semibold mt-0.5">{resultado.paymentId}</p>
+                  <h1 className="text-white text-2xl font-bold mb-1">No pudimos procesar tu pago</h1>
+                  <p className="text-white/80 text-sm">{resultado.msg}</p>
+                </div>
+
+                <div className="bg-[#f23d4f] h-4 relative">
+                  <div className="absolute bottom-0 left-0 right-0 h-4 bg-white rounded-t-[50%]" />
+                </div>
+
+                <div className="px-6 pt-2 pb-4">
+                  <div className="py-4 border-b border-gray-100">
+                    <p className="text-gray-500 text-sm mb-3">Posibles razones:</p>
+                    <ul className="space-y-2">
+                      {['Fondos insuficientes', 'Datos de la tarjeta incorrectos', 'Tarjeta vencida o bloqueada'].map(r => (
+                        <li key={r} className="flex items-center gap-2 text-sm text-gray-600">
+                          <span className="w-1.5 h-1.5 bg-red-400 rounded-full flex-shrink-0" />
+                          {r}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="pt-4 pb-2 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 my-4 flex items-start gap-3">
+                    <span className="text-amber-500 text-lg">💡</span>
+                    <p className="text-gray-600 text-xs leading-relaxed">
+                      Para aprobar el pago en modo prueba usa la tarjeta <strong>5031 7557 3453 0604</strong> con nombre <strong>APRO</strong>.
+                    </p>
                   </div>
                 </div>
-              )}
 
-              {/* Acciones */}
-              <div className="px-6 py-5 flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={resetear}
-                  className="flex-1 bg-[#009ee3] hover:bg-[#0080bb] text-white font-semibold py-3 px-4 rounded-lg transition-colors text-sm text-center"
-                >
-                  Probar otro producto
-                </button>
-                <a
-                  href="/catalogo"
-                  className="flex-1 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold py-3 px-4 rounded-lg transition-colors text-sm text-center"
-                >
-                  Ver catálogo
-                </a>
+                <div className="px-6 pb-6 flex flex-col gap-3">
+                  <button
+                    onClick={resetear}
+                    className="w-full bg-[#009ee3] hover:bg-[#0080bb] text-white font-bold py-3.5 px-4 rounded-xl transition-colors text-sm"
+                  >
+                    Intentar nuevamente
+                  </button>
+                  <a
+                    href="/"
+                    className="w-full border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold py-3.5 px-4 rounded-xl transition-colors text-sm text-center"
+                  >
+                    Volver al inicio
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         )}
       </main>
     </div>
   );
 }
+
